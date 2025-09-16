@@ -25,8 +25,16 @@ resource "aws_iam_user_group_membership" "devOps-group-member" {
   ]
 }
 
+resource "aws_iam_user_group_membership" "attach-givi-to-devOps" {
+  user = aws_iam_user.givi[0].name
+  groups = [
+    aws_iam_group.devOps-group.name,
+  ]
+}
+
+
 resource "aws_iam_user_group_membership" "dev-group-member" {
-  user = aws_iam_user.givi[count.index].name#!!!!!!
+  user = aws_iam_user.givi[count.index].name
   count = length(var.dev_users)
   groups = [
     aws_iam_group.dev-group.name,
